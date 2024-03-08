@@ -21,24 +21,15 @@ if response.status_code != 200:
 
 htmlStr = response.text
 soup = BeautifulSoup(htmlStr, 'html.parser')
-
 if str(soup.html.get("id")) != "facebook":
     print("Page not recognized as Facebook, problems may occuor.")
     print("Stoping script...")
     sys.exit(0)
-    
-    """cont = input("Continue or Stop? s/n ")
-    while cont != "s" and cont != "n":
-        print(type(cont))
-        cont = input("Continue or Stop? s/n ")
-    
-    if cont == "n":
-        print("Stoping...")
-        sys.exit(0)
-    print("Continuing script")"""
 
+links = len(soup.find_all('img'))
 
-
+for a in soup.find_all('img'):
+    print(a)
 
 print("Hello World")
-print(type(soup.title))
+print(links)
