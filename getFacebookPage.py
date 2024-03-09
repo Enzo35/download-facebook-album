@@ -10,7 +10,6 @@ from bs4 import BeautifulSoup
 def linkToSoup_selenium(l, ecx=None):
     try:
         cService = webdriver.ChromeService(executable_path='chromedriver.exe')
-        #cService = webdriver.ChromeService(executable_path='/Users/[...]binaries(117)/chromedriver')
         driver = webdriver.Chrome(service = cService)
         # I copy chromedriver.exe to every folder with py file that will need to scrape with selenium
 
@@ -22,6 +21,7 @@ def linkToSoup_selenium(l, ecx=None):
         lSoup = BeautifulSoup(driver.page_source, 'html.parser')
         driver.close()
         del driver
+        print("\ndone")
         return lSoup
     except Exception as e:
         print(e)
