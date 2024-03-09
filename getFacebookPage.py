@@ -4,10 +4,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+
 
 def linkToSoup_selenium(l, ecx=None):
     try:
-        driver = webdriver.Chrome('chromedriver.exe')
+        cService = webdriver.ChromeService(executable_path='chromedriver.exe')
+        #cService = webdriver.ChromeService(executable_path='/Users/[...]binaries(117)/chromedriver')
+        driver = webdriver.Chrome(service = cService)
         # I copy chromedriver.exe to every folder with py file that will need to scrape with selenium
 
         driver.get(l)

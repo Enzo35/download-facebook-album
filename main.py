@@ -1,7 +1,8 @@
 import sys
-
 import requests
 from bs4 import BeautifulSoup
+
+from getFacebookPage import linkToSoup_selenium
 
 BASE_FACEBOOK_URL = "https://www.facebook.com/"
 
@@ -19,10 +20,17 @@ if response.status_code != 200:
     sys.exit(0)
 
 
-htmlStr = response.text
+"""htmlStr = response.text
 soup = BeautifulSoup(htmlStr, 'html.parser')
 if str(soup.html.get("id")) != "facebook":
     print("Page not recognized as Facebook, problems may occuor.")
+    print("Stoping script...")
+    sys.exit(0)
+"""
+
+soup = linkToSoup_selenium(url, '//h2//span//*[contains(text(),"Intro")]')
+if soup == None:
+    print("Page not recognized.")
     print("Stoping script...")
     sys.exit(0)
 
