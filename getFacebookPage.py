@@ -17,11 +17,18 @@ def linkToSoup_selenium(l, ecx=None):
         if ecx:
             WebDriverWait(driver, 25).until(
                 EC.visibility_of_all_elements_located((By.XPATH, ecx)))
+        
+        #WebDriverWait(driver, 30)
+        #button_quit = driver.find_element(By.XPATH("//div[@role = 'button']"))
+        button_quit = driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/div")
+        button_quit.click()
+        
+        WebDriverWait(driver, 25).until(
+                EC.visibility_of_all_elements_located((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[1]/div[2]/div/div[1]/div/div[1]/div/div[1]/a/div/img")))
 
         lSoup = BeautifulSoup(driver.page_source, 'html.parser')
         driver.close()
         del driver
-        print("\ndone")
         return lSoup
     except Exception as e:
         print(e)

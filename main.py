@@ -20,16 +20,17 @@ if response.status_code != 200:
     sys.exit(0)
 
 
-soup = linkToSoup_selenium(url, '//h2//span//*[contains(text(),"Intro")]')
+#soup = linkToSoup_selenium(url, '//h2//span//*[contains(text(),"Intro")]')
+soup = linkToSoup_selenium(url, '/html/body/div[1]/div/div[1]/div/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/div')
 if soup == None:
     print("Page not recognized.")
     print("Stoping script...")
     sys.exit(0)
 
-links = len(soup.find_all('img'))
-
+links = soup.find_all('img')
+'''
 for a in soup.find_all('img'):
+    print("\n")
     print(a)
-
-print("Hello World")
-print(links)
+'''
+print(len(links))
