@@ -165,3 +165,4 @@ __pycache__
 venv
 .env
 .exe
+chromedriver.exe
