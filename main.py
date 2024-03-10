@@ -1,16 +1,22 @@
+import os
 import sys
 import requests
+import urllib
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+
 from bs4 import BeautifulSoup
 
 
 l = input("Input Facebook Album URL: \n")
 
-ecx_login = "/html/body/div[1]/div/div[1]/div/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/div"
+exc_album_title = "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div[1]/div/div[1]/div[1]/div[2]/span/div/div/div/div/span"
+
+ecx_quit_login = "/html/body/div[1]/div/div[1]/div/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/div"
 
 ecx_album = "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[1]/div[2]/div/div[1]/div/div[1]/div/div[1]/a/div/img"
 
@@ -19,16 +25,24 @@ ecx_photo = "/html/body/div[1]/div/div[1]/div/div[5]/div/div/div[3]/div[2]/div/d
 ecx_next_photo = "/html/body/div[1]/div/div[1]/div/div[5]/div/div/div[3]/div[2]/div/div[2]/div/div[1]/div/div[1]/div[3]/div/div/div/i"
 
 
+
 try:
     cService = webdriver.ChromeService(executable_path='chromedriver.exe')
     driver = webdriver.Chrome(service = cService)
     # I copy chromedriver.exe to every folder with py file that will need to scrape with selenium
 
     driver.get(l)
-    if ecx_login:
-        WebDriverWait(driver, 25).until(EC.visibility_of_all_elements_located((By.XPATH, ecx_login)))
-    
-    button_quit = driver.find_element(By.XPATH, ecx_login)
+    if ecx_quit_login:
+        WebDriverWait(driver, 25).until(EC.visibility_of_all_elements_located((By.XPATH, ecx_quit_login)))
+
+    path_to_dowload = f"downloads/{driver.find_element(By.XPATH, exc_album_title).text}"
+
+    try:
+        os.mkdir(path_to_dowload, mode=0o755)
+    except FileExistsError:
+        None
+
+    button_quit = driver.find_element(By.XPATH, ecx_quit_login)
     button_quit.click()
     
     WebDriverWait(driver, 25).until(EC.visibility_of_all_elements_located((By.XPATH, ecx_album)))
@@ -40,8 +54,14 @@ try:
     
     WebDriverWait(driver, 25).until(EC.visibility_of_all_elements_located((By.XPATH, ecx_next_photo)))
 
+    print("00")
+
     button_next_photo = driver.find_element((By.XPATH, ecx_next_photo))
-    button_next_photo.click()
+
+    print("01")
+
+    #ActionChains(driver).move_to_element(button_next_photo)
+    #button_next_photo.click()
 
     WebDriverWait(driver, 25).until(EC.visibility_of_all_elements_located((By.XPATH, ecx_photo)))
 
